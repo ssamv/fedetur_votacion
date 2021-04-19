@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <!-- Basic Conf/Desc -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">	
+    <title>Votaciones</title>	
+    <meta name="keywords" content="Swaper"/>
+    <meta name="description" content="Swaper">
+    <meta name="author" content="Sebastian Muñoz">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="#" />
+    <link rel="apple-touch-icon" href="#">
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
+
+    <!-- CSS-->
+    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/custom.css">
+
+    <!-- JS -->
+    <script src="/lib/jquery/jquery-3.6.0.min.js"></script>
+    <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- CSS SPECIFIC-->
+    <style>
+      body{
+        background-color: rgb(196, 196, 196);
+        padding: 0 !important;
+      }
+
+      input[type=submit]{
+        background-color: white;
+        color: #292929;
+        border: solid 2px #292929;
+        border-radius: 5px;
+        padding: 10px 30px;
+      }
+
+      input[type=submit]:hover{
+        background-color: #292929;
+        color: white;
+      }
+
+      @media only screen and (max-width: 420px) {
+        img#logo{
+          width:100px !important;
+        }
+      }
+    </style>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B671VQEXVW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B671VQEXVW');
+</script>
+  </head>
+
+
+
+  <body>
+    <!-- Modal -->
+    <div class="modal fade" id="terminos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Términos y condiciones Swaper Votaciones</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body text-start">
+            Terminos y condiciones en actualización. 
+          </div>
+          <div class="modal-footer">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <main class="vh-100">
+      <div class="container">
+        <div class="row text-center d-block" style="padding:10px;">
+          <div class="col-12 text-center mt-4 mb-4">
+            <img src="/img/POWERED_BY_SWAPER_BLANCO.png" width="200px">
+          </div>
+          <div class="col-sm-10 col-ms-10 col-md-8 col-lg-4 card text-center d-inline-block" style="border-radius:20px;">
+            <div class="card-body">
+              <h2 class="featurette-heading text-dark fw-bold">Votacion Swaper Demo</span></h2>
+                <p class="mt-4 card-text mb-3">Introduzca sus datos para ingresar a la votacion</p>
+              <form id="form-login" action="/login" method="POST">
+                <div class="mb-3 text-start">
+                  <label for="rut" class="form-label">Rut</label>
+                  <input type="text" class="form-control" id="rut" name="rut" required placeholder="11222333-9">
+                </div>
+                <div class="mb-3 text-start">
+                  <label for="pass" class="form-label">Contraseña</label>
+                  <input type="password" class="form-control" id="pass" name="pass" required placeholder="********">
+                </div>
+                <div class="mb-3 text-center">
+                  <input type="checkbox" id="aceptar_terminos" required>
+                  <a href="#terminos" data-bs-toggle="modal" style="text-decoration: none;">Acepto términos y condiciones de Swaper Votaciones</a>
+                </div>
+                <input id="ingresar" class="mt-2 mb-2" href="#" type="submit" value="Ingresar"/>
+                <br>
+                <span id="rut-val" style="color: red; display: none;">Rut invalido</span>
+                <% if(denied==true) {%><span id="email-val" style="color: red;">Rut y/o contraseña incorrectos o no corresponden a las votaciones activas</span> <% } %>
+              </form>
+            </div>
+            <!--
+            <hr class="featurette-divider">
+            <div class="w-100 d-inline-block mb-3">
+              <span id="countdown-title">La votacion comenzara en:<br></span>
+              <span id="countdown" class="fw-bold"></span>
+            </div>-->
+          </div>
+          <div class="col-12 text-center mt-4 mb-4">
+            <img src="/img/POWERED_BY_SWAPER_BLANCO.png" width="200px">
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+/*
+      var end = new Date('2021/04/15 00:00');
+
+      var _second = 1000;
+      var _minute = _second * 60;
+      var _hour = _minute * 60;
+      var _day = _hour * 24;
+      var timer;
+
+      function showRemaining() {
+          var now = new Date();
+          var distance = end - now;
+          console.log(end);
+          console.log(now);
+          console.log(distance);
+          if (distance < 0) {
+
+              clearInterval(timer);
+              document.getElementById('countdown').innerHTML = '<strong>YA COMENZO EL EVENTO!</strong>';
+              $('#countdown-title').css("display","none");
+              $("#ingresar").attr("disabled",false);
+              return;
+          }
+          else{
+            $("#ingresar").attr("disabled",true);
+            var days = Math.floor(distance / _day);
+            var hours = Math.floor((distance % _day) / _hour);
+            var minutes = Math.floor((distance % _hour) / _minute);
+            var seconds = Math.floor((distance % _minute) / _second);
+
+            document.getElementById('countdown').innerHTML = days + ' dias, ';
+            document.getElementById('countdown').innerHTML += hours + ' horas, ';
+            document.getElementById('countdown').innerHTML += minutes + ' minutos y ';
+            document.getElementById('countdown').innerHTML += seconds + ' segundos';
+          }
+      }
+
+      timer = setInterval(showRemaining, 1000);
+*/
+
+      var Fn = {
+        // Valida el rut con su cadena completa "XXXXXXXX-X"
+        validaRut : function (rutCompleto) {
+          rutCompleto = rutCompleto.replace("‐","-");
+          if (!/^[0-9]+[-|‐]{1}[0-9kK]{1}$/.test( rutCompleto ))
+            return false;
+          var tmp 	= rutCompleto.split('-');
+          var digv	= tmp[1]; 
+          var rut 	= tmp[0];
+          if ( digv == 'K' ) digv = 'k' ;
+          
+          return (Fn.dv(rut) == digv );
+        },
+        dv : function(T){
+          var M=0,S=1;
+          for(;T;T=Math.floor(T/10))
+            S=(S+T%10*(9-M++%6))%11;
+          return S?S-1:'k';
+        }
+      }
+
+      $(document).ready(function(){
+        $("#form-login").submit(function() {
+        if (Fn.validaRut($("#rut").val())){
+
+        }else{
+          $("#rut-val").css("display","block");
+          return false;
+        }
+        });
+
+        $("#rut").keydown(function(){
+          var rut = $("#rut").val();
+          console.log(rut);
+          rut = rut.replace(".","");
+          console.log(rut);
+          $("#rut").val(rut);
+        });
+      });
+     
+
+    </script>
+  </body>
+</html>

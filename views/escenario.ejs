@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Basic Conf/Desc -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">	
+    <title>Venta Especial Boda Online</title>	
+    <meta name="keywords" content="E-Swaper"/>
+    <meta name="description" content="Evento">
+    <meta name="author" content="Sebastian Muñoz">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="#" />
+    <link rel="apple-touch-icon" href="#">
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
+
+    <!-- CSS-->
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/custom.css">
+
+        <!-- CSS Icons-->
+        <link rel="stylesheet" href="/lib/bootstrap/css_icons/bootstrap-icons.css">
+
+    <!-- JS -->
+    <script src="lib/jquery/jquery-3.6.0.min.js"></script>
+    <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+  </head>
+
+  <body style="padding-top: 3.5rem;">
+
+        <!-- Modal -->
+        <div class="modal fade" id="tutorial"  data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Tutorial</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body text-center">
+                <iframe src="https://player.vimeo.com/video/538344531?title=0&byline=0&portrait=0" width="100%" height="400" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="mi-perfil" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Mi perfíl</h5>
+              <% if(data.lleno_datos==1){ %>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <% } %>
+              </div>
+              <div class="modal-body text-center">
+                <div class="row text-center">
+                  <form class="text-center" action="/cambiar-perfil" method="POST">
+                    <div class="col-10 text-start d-inline-block">
+                      <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" disabled id="email" value="<%=data.email%>"name="email" required placeholder="name@example.com">
+                      </div>
+                      <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" value="<%=data.firstname%>" required name="nombre">
+                      </div>
+                      <div class="mb-3">
+                        <label for="apellidos" class="form-label">Apellidos</label>
+                        <input type="text" class="form-control" id="apellidos" value="<%=data.lastname%>" required name="apellidos" >
+                      </div>
+                      <div class="mb-3">
+                        <label for="ciudad" class="form-label">Ciudad</label>
+                        <input type="text" class="form-control" id="ciudad" value="<%=data.ciudad%>" required name="ciudad" >
+                      </div>
+                      <div class="mb-3">
+                        <label for="comuna" class="form-label">Comuna</label>
+                        <input type="text" class="form-control" id="comuna" value="<%=data.comuna%>" required name="comuna" >
+                      </div>
+                      <div class="mb-3">
+                        <label for="telefono" class="form-label">Telefono</label>
+                        <input type="text" class="form-control" id="telefono" value="<%=data.telefono%>" required name="telefono" placeholder="+56912345678">
+                      </div>
+                      <div class="mb-3">
+                        <label for="fecha_matrimonio" class="form-label">Fecha Matrimonio</label>
+                        <input type="date" class="form-control" id="fecha_matrimonio" value="<% if(data.fecha_matrimonio!=undefined) { %><%=data.fecha_matrimonio.substring(0,10)%><% } %>" name="fecha_matrimonio" >
+                      </div>
+                      <div class="mt-2">
+                        <input type="submit" class="form-control" value="Guadar Cambios">
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div class="modal-footer">
+              </div>
+            </div>
+          </div>
+        </div>
+
+    <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light p-0">
+      <div class="container-fluid text-start">
+        <a class="navbar-brand p-0" href="/lobby" style="float: left; margin-right: 2% !important;"><img src="/img/logo_vebo.png" width="80px"/></a>
+        <a class="navbar-brand p-0" href="/stand/416" style="float: left; margin-right: 2% !important;" target="_blank"><img id="noviosparis" src="/img/noviosparis.png" width="120px"/></a>
+        <a class="navbar-brand p-0" href="/escenario-live" style="float: left; margin-right: 2% !important;" target="_blank">
+          <div class="text-center" width="100px;">
+            <span id="anuncio" class="text-dark fw-bold" style="font-size: 21px;">Programa <br> 18 Abril</span>
+          </div>
+        </a>          
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse pt-2 pb-2" id="navbarCollapse">
+            <div id="#nav-collapse-menu-items" class="text-end" style="display: inline-block; width:100%;">
+              <ul class="navbar-nav mb-2 mb-md-0">
+                <li class="nav-item">
+                  <a id="nav" class="nav-link text-dark" href="/lobby">Lobby</a>
+                </li>
+                <li class="nav-item">
+                  <a id="nav" class="nav-link" href="/escenario">Escenario</a>
+                </li>
+                <li class="nav-item">
+                  <a id="nav" class="nav-link" href="/expositores">Expositores</a>
+                </li>
+                <li class="nav-item">
+                  <a id="nav" class="nav-link" href="/img/programa.jpeg" target="_blank">Programa</a>
+                </li>
+              </ul>
+                <a id="btn-nav" class="" href="#tutorial" data-bs-toggle="modal">Tutorial</a>
+                <a id="btn-nav" class="" href="#mi-perfil" data-bs-toggle="modal">Mi perfíl</a>
+                <a id="btn-nav" class="" href="/logout">Salir</a>
+            </div>
+          </div>
+      </div>
+  </nav>
+    
+    <header style="position:relative; top:45px;">
+      <div style="background-color: #95bdac;">
+        <div class="container pt-5 pb-2">
+          <div class="row featurette mb-3">
+            <div class="col-md-12 text-center">
+              <h1 class="featurette-heading text-dark fw-bold">Lobby<span class="text-light fw-bold"> Venta Especial Boda Online</span></h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+
+    <main style="position:relative; top:14px;" id="#auditorio">
+        <div class="album py-5">
+          <div class="container">
+            <div class="row g-3 text-center">
+              <div class="col-sm-12" style="position: relative;">
+                <img src="img/escenario.jpg" width="100%" height="auto" style="border: none; padding: 0; border-radius: 15px;"/>
+                <a id="link-video-auditorio" href="/escenario-live" style="color: #95bdaca6; position: absolute; top: 27%; left:20%; width:63%; height:57%; background-color: rgba(255, 255, 255, 0); 
+                       display: inline-block; text-align: center !important;">
+                   <table style="width: 100%; height: 100%;"><tbody><tr><td class="align-middle">
+                    <i class="bi bi-play-circle" style="width:100%; line-height: 0px !important; font-size: 11vw; display: inline-block; position: relative;"></i>
+                   </td></tr></tbody></table>
+                </a>
+              </div>
+              <br>
+              <diV class="col-sm-12 text-center mt-2 mb-2">
+                <a id="btn-volver" class="" href="/lobby" style="width:300px; display:inline-block;">Lobby</a>
+              </diV>
+            </div>
+          </div>
+          <!--<hr class="featurette-divider">-->
+        </div>
+        
+    </main>
+
+
+        <footer style="position:relative; top:45px; background-color: #95bdac;" class="footer py-3">
+        <div class="container">
+          <span class="text-light" style="font-size: 18px; font-weight: bold;">Venta Especial Boda Online 17 y 18 de Abril.</span>
+          <br>
+          <div style="width:100%" class="text-center">
+            <a href="https://www.e-swaper.com/" target="_blank">
+            <img src="/img/POWERED_BY_SWAPER_BLANCO.png" style="width: 300px;"/>
+            </a>
+          </div>
+        </div>
+    </footer>
+
+    <script>
+      var a_actual="a5";
+
+      $(document).ready(function(){
+
+        function cambiarAnuncio(){
+          var a1 = "Desfile <br> 15:30 Hrs";
+          var a2 = "Belcanto <br> 16:00 Hrs";
+          var a3 = "Tomas Cox <br> 17:00 Hrs";
+          var a4 = "Valeria Morillo <br> 19:00 Hrs";
+          var a5 = "Programa <br> 18 Abril";
+
+          $("#anuncio").slideToggle();
+            setTimeout(function(){
+              if (a_actual=="a5"){
+              $("#anuncio").html(a1);
+              a_actual="a1";
+            }else if (a_actual=="a1"){
+              $("#anuncio").html(a2);
+              a_actual="a2";
+            }else if (a_actual=="a2"){
+              $("#anuncio").html(a3);
+              a_actual="a3";
+            }else if (a_actual=="a3"){
+              $("#anuncio").html(a4);
+              a_actual="a4";
+            }else if (a_actual=="a4"){
+              $("#anuncio").html(a5);
+              a_actual="a5";
+            }
+            $("#anuncio").slideToggle();
+          },1000);
+          
+          
+        }
+        setInterval(cambiarAnuncio,3500);
+      });
+    </script>
+  </body>
+</html>

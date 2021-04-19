@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <!-- Basic Conf/Desc -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">	
+    <title>Votaciones</title>	
+    <meta name="keywords" content="Swaper"/>
+    <meta name="description" content="Swaper">
+    <meta name="author" content="Sebastian Muñoz">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="#" />
+    <link rel="apple-touch-icon" href="#">
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
+
+    <!-- CSS-->
+    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/custom.css">
+
+    <!-- JS -->
+    <script src="/lib/jquery/jquery-3.6.0.min.js"></script>
+    <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+
+  </head>
+
+  <body>
+    <!-- Modal -->
+    <div class="modal fade" id="tutorial"  data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Tutorial</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body text-center">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="confirmar_votacion"  data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Confirmar Votación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="text-start">
+                    <h5>Este es el recuento de sus votos:</h5>
+                </div>
+                <hr class="featurette-divider">
+                <div class="">
+                    <span id="recuento_votacion">
+                        VOTO "EN BLANCO"<br>No votó por ninguno de los candidatos, verifique sus votos o confirme su votación como "EN BLANCO"
+                    </span>
+                </div>
+                <hr class="featurette-divider">
+                <a class="btn btn-primary pt-2 pb-2" onclick="save_votacion();" style="width:100%;font-size: 18px;">Confirmar mis votos</a>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="votacion_exitosa" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Votación Exitosa</h5>
+            </div>
+            <div class="modal-body text-center">
+                <div class="alert alert-primary" role="alert">
+                    Su votación se registró correctamente.
+                  </div>
+                <a href="/votaciones" class="btn btn-primary pt-2 pb-2" style="width:100%;font-size: 18px;">Volver a votaciones</a>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="votacion_repetida" data-bs-backdrop="static"  data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Votación Rechazada</h5>
+            </div>
+            <div class="modal-body text-center">
+                <div class="alert alert-primary" role="alert">
+                  Lo sentimos, pero ya registramos su voto, no puede volver a votar en esta votación.
+                </div>
+                <a href="/votaciones" class="btn btn-primary pt-2 pb-2" style="width:100%;font-size: 18px;">Volver a votaciones</a>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="votacion_error" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Error al guardar votación</h5>
+            </div>
+            <div class="modal-body text-center">
+                <div class="alert alert-primary" role="alert">
+                    Lo sentimos, ocurrio un error al registrar su votación. Favor intentarlo nuevamente.
+                </div>
+                <a href="/votacion/<%=votacion.id%>" class="btn btn-primary pt-2 pb-2" style="width:100%;font-size: 18px;">Intentar Nuevamente</a>
+                <a href="/votaciones" class="btn btn-primary pt-2 pb-2" style="width:100%;font-size: 18px;">Volver a votaciones</a>
+            </div>
+            </div>
+        </div>
+    </div>
+
+
+    <nav class="navbar navbar-expand-md navbar-dark p-0" style="background-color: #4e4e4e;">
+      <div class="container-fluid">
+        <div class="text-center mt-2 mb-2 text-light" style="display: inline-block; width:100%;">
+            <a class="float-start btn btn-outline-light" href="/votaciones">Volver</a>
+            <a class="float-end btn btn-outline-light" href="#" data-bs-toggle="modal">Tutorial</a>
+                Votante: Sebastian Muñoz
+        </div>
+      </div>
+    </nav>
+
+    <div class="sticky-top" style="background-color: #4e4e4e;">
+        <div class="container-fluid">
+            <div class="text-center mt-2 mb-2 text-light" style="display: inline-block; width:100%;">
+                <div class="row row-cols-2 g-1">
+                    <div class="col">
+                        Votos totales: <%=user.votos%>
+                    </div>
+                    <div class="col">
+                        Votos Restantes: <span id="votos_restantes"><%=user.votos%></span>
+                    </div>
+                </div>
+                <div id="alert-1" class="alert alert-warning mb-0 mt-2" role="alert" style="display:none;">
+                    Ha ingresado mas votos de los que tiene asignados, porfavor revise su votacion.
+                    Al confirmar la votacion en este momento se registraran todos sus votos como NULOS.
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <header>
+      <div class="container pt-5 pb-2">
+        <div class="row featurette">
+          <div class="col-md-12 text-start">
+            <h1 class="featurette-heading fw-bold" style="color: #4e4e4e;"><%=votacion.nombre%><span class="text-success fw-bold"></span></h1>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main style="position:relative; min-height: 50vh;" id="#feriavirtual">
+        <div class="album py-5">
+          <div class="container">
+            <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-6 g-3">
+
+                <% for(i = 0; i < candidatos.length; i++){ %>
+              <div class="col">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="text-center">
+                        <img src="/img/candidatos/sebastian_munoz.png" width="70%"/>
+                    </div> 
+                    <hr class="featurette-divider">
+                    <div class="text-center">
+                        <span style="font-size: 17px;"><%=candidatos[i].nombre%></span><br>
+                        <span style="font-size: 17px; font-weight: bold;"><%=candidatos[i].empresa%></span>
+                    </div> 
+                    <div class="text-center mt-2">
+                        <div class="d-inline-block" style="width: 50%;">
+                            <input type="number" class="form-control voto_input" data-id="<%=candidatos[i].id%>" data-nombre="<%=candidatos[i].nombre%>" min="0" max="<%=user.votos%>" value="0"/>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% } %>
+            
+            </div>
+          </div>
+        </div>
+        <div style="position: sticky ; bottom: 0px; background-color: white;">
+            <div class="container-fluid">
+                <div class="text-center pt-2 pb-2 text-light" style="display: inline-block; width:100%;">
+                    <a class="btn btn-primary pt-3 pb-3" href="#confirmar_votacion" data-bs-toggle="modal" style="width:100%;font-size: 20px; font-weight: bold;">Continuar</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    <footer style="position:relative; background-color: #4e4e4e; min-height: 30vh;"  class="footer py-3">
+        <div class="container">
+          <div style="width:100%" class="text-center">
+            <img src="/img/POWERED_BY_SWAPER_BLANCO.png" style="width: 200px;"/>
+          </div>
+        </div>
+    </footer>
+
+    <script>
+      var votosTotales = <%=user.votos%>;
+      var votosRestantes = 0;
+
+      var arrayVotos = [];
+      var votos_insert = "BLANCO";
+      var recuento_votacion ="";
+
+      $(document).ready(function(){
+          
+          function sumarVotos(){
+            arrayVotos = [];
+            recuento_votacion = "";
+            var insert="";
+            var voto = 0;
+            var resultado = 0;
+            $(".voto_input").each(function(){
+                voto = parseInt($(this).val());
+                candidato = $(this).data("id");
+                n_candidato = $(this).data("nombre");
+                console.log(candidato+n_candidato);
+                resultado += voto;
+
+                if (voto>0){
+                    arrayVotos.push([candidato,voto]);
+                    recuento_votacion+="<br>"+n_candidato+": "+voto+" voto(s)";
+                }
+            });
+            
+            recuento_votacion+="<br>";
+            if(resultado>votosTotales){
+                $("#recuento_votacion").html('VOTO "NULO"<br>Esta otorgando mas votos de los que tiene asignados, verifique sus votos o confirme su votación como "NULA"');
+                votos_insert = "NULO";
+            }else if(resultado<=0){
+                $("#recuento_votacion").html('VOTO "EN BLANCO"<br>No voto por ninguno de los candidatos, verifique sus votos o confirme su votacion como "EN BLANCO"');
+                votos_insert = "BLANCO";
+            }else{
+                $("#recuento_votacion").html(recuento_votacion);
+                for(i = 0; i < arrayVotos.length;i++){
+                    insert += arrayVotos[i][0]+","+arrayVotos[i][1]+";";
+                }
+                votos_insert = insert.substring(0,insert.length-1);
+            }
+            return resultado;
+          }
+
+        $(".voto_input").change(function(){
+            var resultado = sumarVotos();
+            votosRestantes = votosTotales - resultado;
+            if(votosRestantes<0){
+                $("#alert-1").css("display","block");
+                votosRestantes = 0
+                $("#votos_restantes").html(votosRestantes);
+            }else{
+                $("#alert-1").css("display","none");
+                $("#votos_restantes").html(votosRestantes);
+            }
+            console.log(votosRestantes)
+        });
+      });
+
+      function save_votacion(){
+        $.post("/votar",{id_v: <%=votacion.id%>, id_user: <%=user.id%>, votos: votos_insert}, function(data){
+            if (data){
+                if(data=="EXISTE"){
+                $("#confirmar_votacion").modal("toggle");
+                $("#votacion_repetida").modal("toggle");
+                }else{
+                $("#votacion_exitosa").modal("toggle");
+                $("#confirmar_votacion").modal("toggle");
+                }
+                console.log("SUCESS"+data);
+            }else{
+                $("#votacion_error").modal("toggle");
+                console.log("ERROR");
+            }
+        });
+      }
+        
+      function cotizar(id_stand){
+          
+        }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,130 @@
+
+.container {
+  width: auto;
+  padding: 0 15px;
+}
+
+.animateHidden {
+  visibility: hidden;
+}
+
+a#nav{
+  color: white;
+}
+
+a#nav:hover{
+  font-weight: bold !important;
+}
+
+.button-1{
+  background-color: white;
+  color: #0e1311 ;
+  border: solid 2px #95bdac;
+  border-radius: 5px;
+  padding: 8px 10px;
+  text-decoration: none;
+}
+
+.btn-cat:hover{
+  background-color: #95bdac;
+  color: white;
+}
+
+.btn-cat{
+  background-color:  white;
+  color: #95bdac;
+  border: solid 2px  white;
+  border-radius: 20px;
+  padding: 15px 25px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+a#btn-nav:hover{
+  background-color: #95bdac;
+  color: white;
+}
+
+a#btn-volver{
+  background-color: #95bdac;
+  color: white;
+  border: solid 2px #95bdac;
+  border-radius: 5px;
+  padding: 15px 25px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+a#btn-volver:hover{
+  color: #95bdac;
+  background-color: white;
+}
+
+a#link-video-auditorio:hover{
+  color: #95bdacec !important;
+  background-color: #95bdac65 !important;
+}
+
+
+@media only screen and (max-width: 766px) {
+  #anuncio{
+    font-size: 17px !important;
+  }
+
+  nav .navbar-nav{
+    width:100%;
+  }
+
+  #div-select-categorias{
+    top:67px !important;
+  }
+
+  .btn-control-stand{
+    bottom: 15% !important;
+  }
+
+  #btn-fullscreen{
+    right: 28% !important;
+  }
+
+  #btn-exit-fullscreen{
+    right: 28% !important;
+  }
+
+  #btn-collection{
+    left: 28% !important;
+  }
+
+  @media all and (orientation:landscape) {
+    .btn-control-stand{
+      bottom: 1% !important;
+    }
+  }
+}
+
+@media only screen and (min-width: 768px) {
+
+  nav .navbar-nav{
+    display: inline-flex;
+  }
+
+  nav img{
+    width:150px;
+  }
+
+  #noviosparis{
+    width:230px !important;
+  }
+}
+
+@media all and (display-mode: fullscreen) {
+  #btn-fullscreen{
+    display: none !important;
+  }
+
+  #btn-exit-fullscreen{
+    display: block !important;
+  }
+}

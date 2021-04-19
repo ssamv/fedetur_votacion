@@ -1,0 +1,648 @@
+<% 
+  var categoria_stand;
+  if (stands) {
+    for(var i = 0; i < stands.length; i++) {
+      if(stands[i].id == id){
+        categoria_stand = stands[i].categories.split(",");
+      }
+    }
+  }
+%> 
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <!-- Basic Conf/Desc -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">	
+    <title>Venta Especial Boda Online</title>	
+    <meta name="keywords" content="E-Swaper"/>
+    <meta name="description" content="Evento">
+    <meta name="author" content="Sebastian Muñoz">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="#" />
+    <link rel="apple-touch-icon" href="#">
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
+
+    <!-- CSS-->
+    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/lib/animate_css/animate.min.css">
+    <link href="/https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
+    
+    <!-- CSS Icons-->
+    <link rel="stylesheet" href="/lib/bootstrap/css_icons/bootstrap-icons.css">
+
+    <!-- JS -->
+    <script src="/lib/jquery/jquery-3.6.0.min.js"></script>
+    <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B671VQEXVW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B671VQEXVW');
+</script>
+    
+  </head>
+
+  <body class="bg-light">
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="cotiza-success" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Solicitud para Cotizar</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body text-center">
+            <div class="alert alert-success" role="alert">
+              Su solicitud de cotización se registró correctamente. Le haremos llegar al proveedor sus datos registrados para que le contacte.<br><br>
+También puede tener una videoconferencia entre las 2pm y 9pm pinchando el ícono correspondiente en este stand
+            </div>
+          </div>
+          <div class="modal-footer">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="cotiza-info" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Solicitud para Cotizar</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body text-center">
+            <div class="alert alert-info" role="alert">
+              Ya ingresaste una solicitud de cotización en este stand.
+            </div>
+          </div>
+          <div class="modal-footer">
+          </div>
+        </div>
+      </div>
+    </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="tutorial"  data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Tutorial</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body text-center">
+                <iframe src="https://player.vimeo.com/video/538344531?title=0&byline=0&portrait=0" width="100%" height="400" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="mi-perfil" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Mi perfíl</h5>
+          <% if(data.lleno_datos==1){ %>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <% } %>
+          </div>
+          <div class="modal-body text-center">
+            <div class="row text-center">
+              <form class="text-center" action="/cambiar-perfil" method="POST">
+                <div class="col-10 text-start d-inline-block">
+                  <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" disabled id="email" value="<%=data.email%>"name="email" required placeholder="name@example.com">
+                  </div>
+                  <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" value="<%=data.firstname%>" required name="nombre">
+                  </div>
+                  <div class="mb-3">
+                    <label for="apellidos" class="form-label">Apellidos</label>
+                    <input type="text" class="form-control" id="apellidos" value="<%=data.lastname%>" required name="apellidos" >
+                  </div>
+                  <div class="mb-3">
+                    <label for="ciudad" class="form-label">Ciudad</label>
+                    <input type="text" class="form-control" id="ciudad" value="<%=data.ciudad%>" required name="ciudad" >
+                  </div>
+                  <div class="mb-3">
+                    <label for="comuna" class="form-label">Comuna</label>
+                    <input type="text" class="form-control" id="comuna" value="<%=data.comuna%>" required name="comuna" >
+                  </div>
+                  <div class="mb-3">
+                    <label for="telefono" class="form-label">Telefono</label>
+                    <input type="text" class="form-control" id="telefono" value="<%=data.telefono%>" required name="telefono" placeholder="+56912345678">
+                  </div>
+                  <div class="mb-3">
+                    <label for="fecha_matrimonio" class="form-label">Fecha Matrimonio</label>
+                    <input type="date" class="form-control" id="fecha_matrimonio" value="<% if(data.fecha_matrimonio!=undefined) { %><%=data.fecha_matrimonio.substring(0,10)%><% } %>" name="fecha_matrimonio" >
+                  </div>
+                  <div class="mt-2">
+                    <input type="submit" class="form-control" value="Guadar Cambios">
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="modal-footer">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="navbar navbar-expand-md navbar-light bg-light p-0">
+      <div class="container-fluid text-start">
+        <a class="navbar-brand p-0" href="/lobby" style="float: left; margin-right: 2% !important;"><img src="/img/logo_vebo.png" width="80px"/></a>
+        <a class="navbar-brand p-0" href="/stand/416" style="float: left; margin-right: 2% !important;" target="_blank"><img id="noviosparis" src="/img/noviosparis.png" width="120px"/></a>
+        <a class="navbar-brand p-0" href="/escenario-live" style="float: left; margin-right: 2% !important;" target="_blank">
+          <div class="text-center" width="100px;">
+            <span id="anuncio" class="text-dark fw-bold" style="font-size: 21px;">Programa <br> 18 Abril</span>
+          </div>
+        </a>          
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse pt-2 pb-2" id="navbarCollapse">
+          <div id="#nav-collapse-menu-items" class="text-end" style="display: inline-block; width:100%;">
+            <ul class="navbar-nav mb-2 mb-md-0">
+              <li class="nav-item">
+                <a id="nav" class="nav-link text-dark" href="/lobby">Lobby</a>
+              </li>
+              <li class="nav-item">
+                <a id="nav" class="nav-link" href="/escenario">Escenario</a>
+              </li>
+              <li class="nav-item">
+                <a id="nav" class="nav-link" href="/expositores">Expositores</a>
+              </li>
+              <li class="nav-item">
+                <a id="nav" class="nav-link" href="/img/programa.jpeg" target="_blank">Programa</a>
+              </li>
+            </ul>
+              <a id="btn-nav" class="" href="#tutorial" data-bs-toggle="modal">Tutorial</a>
+              <a id="btn-nav" class="" href="#mi-perfil" data-bs-toggle="modal">Mi perfíl</a>
+              <a id="btn-nav" class="" href="/logout">Salir</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+        
+    <main>
+      <table style="width:100%; min-height: 500px;"><tbody><tr class="align-middle"><td>
+        <div style="position:relative;" id="div-stands">
+
+          <div class="modal fade" id="giftcard-videollamada" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content ">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="staticBackdropLabel">Concurso Venta Especial Boda Online</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="/img/giftcard-videollamada-stand.png" width="100%" height="auto" >
+                </div>
+              </div>
+            </div>
+          </div>
+         
+          <!-- modal stands categoria -->
+          <div class="modal fade" id="modal-stands" data-bs-keyboard="false" tabindex="10" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="staticBackdropLabel">Stands de: 
+                    <strong>
+                    <% for(var j = 0; j < categoria_stand.length; j++) {  
+                        for(var k = 0; k < categorias.length; k++ ){ 
+                          if( categorias[k].id == categoria_stand[j]) { %>
+                            <%= categorias[k].nombre %> 
+                            <% if (categoria_stand.length>1 && j < (categoria_stand.length - 1)){ %>,<% } %>  <% }}} %>
+
+                    </strong></h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body mb-4 mt-2">
+                  <div class="row row-cols-1 g-3">
+                    <% if (stands) { %>
+                      <% for(var i = 0; i < stands.length; i++) {  var true_false = false;%>
+                        <% for(var j = 0; j < categoria_stand.length; j++) {                            
+                            if(stands[i].categories.indexOf(categoria_stand[j]) != -1){ true_false = true}}
+                            if(true_false){  
+                          %>
+                    <div class="col O-Stand">
+                      <a href="javascript: void(0);" onclick="stand_click(<%=stands[i].id%>);">
+                      <div class="card shadow-sm" style="width:100%; height:225px; overflow: hidden; display: flex; align-items: center; justify-content: center; border-radius: .9rem !important;">
+                        <img src="/img/stands/<%= stands[i].image_min%>" width="550px" height="auto">
+                        <div class="align-middle" style="display: inline-block; position:absolute; text-align:center; top:0%; left:0%; width:auto; height:50px; background-color:rgb(149, 189, 172, 1); color:white; font-weight:bold; font-size:17px; border-bottom-right-radius: .9rem !important;">
+                          <table style="width:100%; height:100%;"><tbody><tr class="align-middle text-center">
+                          <td class="text-center">
+                            <span class="align-middle">
+                              <% var categoria_stand_modal = stands[i].categories.split(","); %>
+                              <% for(var j = 0; j < categoria_stand_modal.length; j++ ) { %>
+                                <img src="/img/category_icons/<% for(var k = 0; k < categorias.length; k++ ){ if( categorias[k].id == categoria_stand_modal[j]) { %><%= categorias[k].icono %> <% }} %>" width="40px" height="auto">
+                              <% } %>
+                            </span>
+                          </td>
+                          </tr></tbody></table>
+                        </div>
+                        <div class="align-middle pt-5 text-light" style="display: inline-block; position:absolute; text-align:center; bottom:0%; left:0%; width:100%; height:90%; background-image: linear-gradient(rgba(0, 0, 0, 0),rgb(149, 189, 172, 1)); font-weight:bold; font-size:27px;">
+                          <table style="width:100%; height:100%;"><tbody><tr class="align-bottom text-center">
+                          <td class="text-center">
+                            <span class="">
+                              <%= stands[i].name%>
+                            </span>
+                          </td>
+                          </tr></tbody></table>
+                        </div>
+                      </div>
+                      </a>
+                    </div>
+                      <% } } %>
+                    <% } %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--FIN MODAL-->
+
+    <% if (stands) { %>
+      <% for(var i = 0; i < stands.length; i++) {  %>
+
+          <!--MODALs VIDEOS-->
+          <div class="modal fade" id="modal-video-<%= stands[i].id %>" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+              <div class="modal-content" style="background-color: unset;">
+                <%if (stands[i].video!=undefined && stands[i].video!="NULL"){ %>
+                  <img src="/img/video/<%=stands[i].video%>" width="100%" height="400"/>
+                  <% } %>
+                <%if (stands[i].video_vimeo!=undefined && stands[i].video_vimeo!="NULL"){ %>
+                <iframe src="https://player.vimeo.com/video/<%=stands[i].video_vimeo%>?badge=0&amp;autopause=0" width="100%" height="400" frameborder="0" allow="autoplay; fullscreen;" allowfullscreen></iframe>
+                <% } %>
+                <%if (stands[i].video_youtube!=undefined && stands[i].video_youtube!="NULL"){ %>
+                <!--YOUTUBE-->
+                <iframe width="100%" height="400" src="https://www.youtube-nocookie.com/embed/<%= stands[i].video_youtube %>"></iframe>
+                <!--FACEBOOK-->
+                <% } %>
+                  <a href="javascript:void(0)" data-bs-dismiss="modal" style="margin-top: 10px; padding: 15px; width:100%; border-radius: 10px; background-color: white; color:#95bdac; border:solid 3px #95bdac; font-weight: bold; font-size: 20px; text-align: center;">Cerrar</a>
+              </div>
+            </div>
+          </div>
+          
+          <!--FIN MODALs VIDEOS-->
+
+          
+          <!--FIN MODALs PDFs-->
+
+          <% } %>
+        <% } %>
+
+          <div class="sticky-top" style="background-color: #95bdac;">
+            <div style="position: relative;">
+              <% if (stands) { %>
+                <% for(var i = 0; i < stands.length; i++) {  %>
+                <div id="ts-<%= stands[i].id %>" class="text-center animate__animated <% if(stands[i].id != id){ %>d-none<% } %>" style="position: absolute; width: 100%; top:0px;">
+                  <div class="align-middle" style="display: inline-block; position:absolute; text-align:left; top:0; left:0; width:100%; height:0; color:white; font-weight:bold; font-size:17px;">
+                    <% var categoria_stand_modal = stands[i].categories.split(","); %>  
+                    <% for(var j = 0; j < categoria_stand_modal.length; j++ ) { %>
+                        <img src="/img/category_icons/<% for(var k = 0; k < categorias.length; k++ ){ if( categorias[k].id == categoria_stand_modal[j]) { %><%= categorias[k].icono %> <% }} %>" width="9%" height="auto" style="background-color: #95bdac; padding: 1%;"/>
+                      <% } %>
+                  </div>
+                </div>
+                <% } %>
+              <% } %>
+            </div>
+          </div>
+          <div id="div-img-stand" style="position: relative;">
+            <img src="/img/false-stand-desktop.png" width="100%" height="auto">
+
+
+        <% if (stands) { %>
+          <% for(var i = 0; i < stands.length; i++) {  %>
+            <div id="s-<%=stands[i].id%>" class="O-Stand animate__animated <% if(stands[i].id != id){ %>d-none<% } %>" style="width:100%; height:auto; overflow: hidden; display: flex; align-items: center; justify-content: center; border-radius: 0 !important; position: absolute; top:0px; left:0px; background-image: url('/img/stands/<%= stands[i].image %>'); background-size: cover;">
+              <img src="/img/false-stand-desktop.png" width="100%" height="auto">
+              <!--LINK VIDEO LLAMADA-->
+              <div id="" class="align-middle" style="display: inline-block; position:absolute; text-align:center; top:2%; left:10%; width:29%; height:15%;">
+                <a href="#giftcard-videollamada" data-bs-toggle="modal" class="btn-control-stand" id="" style="position: relative; line-height: 0; display: block; width: auto; height: auto;"><img src="/img/giftcard-videollamada-stand.png" width="100%" height="auto"/></a>
+                
+              </div>
+              <!--LINK VIDEO LLAMADA-->
+              <div id="stand-link" class="align-middle" style="border-radius:50%; border:solid 7px #ffffff80; display: inline-block; position:absolute; text-align:center; top:38.8%; left:36.7%; width:5.6%; height:9.4%;">
+                <a href="<%= stands[i].whereby %>" target="_blank" class="btn-control-stand" id="" style="color: #95bdac; position: relative; line-height: 0; padding: 5% 5%; display: block;"><img src="/img/video-call.png" style="width:95%"/></a>
+                
+              </div>
+              <!--LINK WHATSAPP-->
+              <div id="stand-link" class="align-middle" style="border-radius:50%; border:solid 7px #ffffff80; display: inline-block; position:absolute; text-align:center; top:38.8%; left:47%; width:5.6%; height:9.4%;">
+                <% if(stands[i].whatsapp!=undefined && stands[i].whatsapp!="NULL") {%><a href="https://api.whatsapp.com/send?phone=<%= stands[i].phone_number%>&text=Hola! Visité su stand en la Venta Especial Boda Online, necesito..." target="_blank" <% } else { %> <a <% } %> class="btn-control-stand" id="" style="color: #95bdac; position: relative; line-height: 0; padding: 5% 5%; display: block;"><img src="/img/whatsapp.png" style="width:85%"/></a>
+              </div>
+              <!--LINK WEBSITE-->
+              <div id="stand-link" class="align-middle" style="border-radius:50%; border:solid 7px #ffffff80; display: inline-block; position:absolute; text-align:center; top:38.8%; left:57.2%; width:5.6%; height:9.4%;">
+                <% if(stands[i].website!=undefined && stands[i].website!="NULL") {%><a href="<%= stands[i].website %>" target="_blank" <% }else{ %> <a href="" <% } %> class="btn-control-stand" id="" style="color: #95bdac; position: relative; line-height: 0; padding: 5% 5%; display: block;"><img src="/img/website.png" style="width:85%"/></a>
+              </div>
+              <!--LINK VIDEO-->
+              <div class="align-middle" style="display: inline-block; position:absolute; text-align:center; top:52%; left:40%; width:20.3%; height:20.2%;">
+                <%if (stands[i].video_link != undefined && stands[i].video_link != "NULL"){%> <a href="<%= stands[i].video_link %>" target="_blank"> <% } else { %><a href="#modal-video-<%= stands[i].id %>" data-bs-toggle="modal"> <% } %>
+                <table style="width:100%; height:100%;"><tbody><tr class="align-middle text-center">
+                <td class="text-center">
+                    <i id="stand-link" class="bi bi-play-circle" style="width:100%; color: rgba(255, 255, 255, 0.555); line-height: 0px !important; font-size: 10vw;"></i>
+                </td>
+                </tr></tbody></table>
+                </a>
+              </div>
+              <!--LINK DESCARGA CATALOGO-->
+              <div id="stand-link" class="align-middle" style="border-radius:10px; border:solid 7px #ffffff80; display: inline-block; position:absolute; text-align:center; top:51.5%; left:25%; width:9.4%; height:28.3%;">
+                <%if (stands[i].file != undefined && stands[i].file != "NULL"){%><a href="/pdf/<%= stands[i].file %>" target="_blank"><% } else if(stands[i].file_link != undefined && stands[i].file_link != "NULL") { %><a href="<%= stands[i].file_link %>" target="_blank"><% } else { %><a><% } %>
+                <table style="width:100%; height:100%;"><tbody><tr class="align-middle text-center">
+                <td class="text-center">
+                </td>
+                </tr></tbody></table>
+                </a>
+              </div>
+              <!--LINK COTIZA AQUI-->
+              <div id="stand-link" class="align-middle" style="border-radius:10px; border:solid 7px #ffffff80; display: inline-block; position:absolute; text-align:center; top:50.7%; left:65.75%; width:9.4%; height:28.3%;">
+                <a href="javascript:void(0)" onclick="cotizar('<%=stands[i].id%>')">
+                <table style="width:100%; height:100%;"><tbody><tr class="align-middle text-center">
+                <td class="text-center">
+                </td>
+                </tr></tbody></table>
+                </a>
+              </div>
+              <!--LINK TELEFONO-->
+              <div id="stand-link" class="align-middle" style="border-radius:10px; border:solid 7px #ffffff00; display: inline-block; position:absolute; text-align:center; top:42.6%; left:15.06%; width:4.8%; height:8.5%;">
+                <a href="tel:+<%= stands[i].phone_number %>" target="_blank">
+                <table style="width:100%; height:100%;"><tbody><tr class="align-middle text-center">
+                <td class="text-center">
+                </td>
+                </tr></tbody></table>
+                </a>
+              </div>
+              <!--LINK FACEBOOK-->
+              <div id="stand-link" class="align-middle" style="border-radius:10px;border:solid 7px #ffffff00; display: inline-block; position:absolute; text-align:center; top:52%; left:15.05%; width:4.8%; height:8.3%;">
+                <a href="<%= stands[i].facebook %>" <% if(stands[i].facebook!=undefined && stands[i].facebook!="NULL"){ %> target="_blank" <% } %> >
+                <table style="width:100%; height:100%;"><tbody><tr class="align-middle text-center">
+                <td class="text-center">
+                </td>
+                </tr></tbody></table>
+                </a>
+              </div>
+              <!--LINK INSTAGRAM-->
+              <div id="stand-link" class="align-middle" style="border-radius:10px; border:solid 7px #ffffff00; display: inline-block; position:absolute; text-align:center; top:61.3%; left:15.05%; width:4.8%; height:8.3%;">
+                <a href="<%= stands[i].instagram %>" <% if(stands[i].instagram!=undefined && stands[i].instagram!="NULL"){ %> target="_blank" <% } %> >
+                <table style="width:100%; height:100%;"><tbody><tr class="align-middle text-center">
+                <td class="text-center">
+                </td>
+                </tr></tbody></table>
+                </a>
+              </div>
+              <!--LINK E-MAIL -->
+              <div id="stand-link" class="align-middle" style="border-radius:10px; border:solid 7px #ffffff00; display: inline-block; position:absolute; text-align:center; top:70.4%; left:15.05%; width:4.8%; height:8.5%;">
+                <a href="mailto:<%= stands[i].email%>">
+                <table style="width:100%; height:100%;"><tbody><tr class="align-middle text-center">
+                <td class="text-center">
+                </td>
+                </tr></tbody></table>
+                </a>
+              </div>
+            </div>
+            <% } %>
+          <% } %>
+        </div>
+            <a href="javascript:void(0)" class="btn-control-stand" id="btn-left" style="background-color: #95bdac; color: white; position: fixed; bottom: 1%; left: 1%; z-index: 1000; font-size: 54px; line-height: 0; padding: 3px 10px; border-radius: 15px;"><i class="bi bi-caret-left"></i></a>
+            <a href="javascript:void(0)" class="btn-control-stand" id="btn-right" style="background-color: #95bdac; color: white; position: fixed; bottom: 1%; right: 1%; z-index: 1000;font-size: 54px; line-height: 0; padding: 3px 10px; border-radius: 15px;"><i class="bi bi-caret-right"></i></a>
+            <a class="btn-control-stand" id="btn-collection" type="button" data-bs-toggle="modal" href="#modal-stands" style="background-color: #95bdac; color: white; position: fixed; bottom: 1%; left: 30%; z-index: 1000; font-size: 54px; line-height: 0; padding: 3px 10px; border-radius: 15px;"><i class="bi bi-collection"></i></a>
+            <a href="javascript:void(0)" class="btn-control-stand" id="btn-fullscreen" style="background-color: #95bdac; color: white; position: fixed; bottom: 1%; right: 30%; z-index: 1000; font-size: 54px; line-height: 0; padding: 3px 10px; border-radius: 15px;"><i class="bi bi-fullscreen"></i></a>
+            <a href="javascript:void(0)" class="btn-control-stand" id="btn-exit-fullscreen" style="display: none; background-color: #95bdac; color: white; position: fixed; bottom: 1%; right: 30%; z-index: 1000; font-size: 54px; line-height: 0; padding: 3px 10px; border-radius: 15px;"><i class="bi bi-fullscreen"></i></a>
+          
+        </div>
+      </td></tr></tbody></table>
+    </main>
+
+
+
+    <footer style="position:relative; height:70px;" class="footer py-3 bg-light">
+  </footer>
+  
+    <!--VIDEO JS-->
+    <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
+
+    <script>
+            var a_actual="a5";
+
+      var array_stands = [];
+      console.log(<%= categoria_stand %>);
+      array_stands.push(<%=id%>);
+        <% if(stands) { 
+           for(var j = 0; j < categoria_stand.length; j++) {
+             for(var i = 0; i < stands.length; i++) {  
+              if(stands[i].categories.indexOf(categoria_stand[j]) != -1){ %>
+                if(!array_stands.includes(<%=stands[i].id%>)){
+                  array_stands.push(<%=stands[i].id%>);
+                }    
+            <%}  
+             } 
+           } 
+        }%> 
+      
+      function cotizar(stand){
+        $.post("/cotizar",
+        {id_user: <%=data.id%>, id_s: stand}, function(data){
+          if (data){
+            console.log("SUCESS"+data);
+          }else{
+            console.log("ERROR");
+          }
+        });
+      }
+      
+      var array_stands_l = array_stands.length;
+      var array_actual = 0;
+      var array_anterior = 0;
+      
+      console.log(array_stands);
+      
+      var standOut;
+      var titleStandOut;
+
+      /* Recorres los stands*/
+      function removeAnimates(element){
+        $(element).removeClass("animate__slideInLeft");
+        $(element).removeClass("animate__slideOutLeft");
+        $(element).removeClass("animate__slideInRight");
+        $(element).removeClass("animate__slideOutRight");
+        $(element).removeClass("animate__zoomInDown");
+        $(element).removeClass("animate__zoomOutDown");
+        $(element).removeClass("animate__swing");
+      }
+
+      function displayOut(s_out,ts_out){
+        $(s_out).addClass("d-none");
+        $(ts_out).addClass("d-none");
+      }
+
+      function displayIn(s_in,ts_in){
+        $(s_in).removeClass("d-none");
+        $(ts_in).removeClass("d-none");
+      }
+
+      var div_stands = document.getElementById("div-stands");
+
+      $(function(){
+        $(".O-Stand").on("animationend",function(){
+          setTimeout(displayOut(standOut,titleStandOut),500);
+        });
+
+        $("#btn-fullscreen").click(function(){
+          if (div_stands.requestFullscreen) {
+            div_stands.requestFullscreen();
+          } else if (div_stands.webkitRequestFullscreen) { /* Safari */
+            div_stands.webkitRequestFullscreen();
+          } else if (div_stands.msRequestFullscreen) { /* IE11 */
+            div_stands.msRequestFullscreen();
+          }
+        });
+
+        $("#btn-exit-fullscreen").click(function(){
+          if(document.exitFullscreen || div_stands.exitFullscreen) {
+            document.exitFullscreen();
+            div_stands.exitFullscreen();
+          } else if(document.mozCancelFullScreen || div_stands.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+            div_stands.mozCancelFullScreen();
+          } else if(document.webkitExitFullscreen || div_stands.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+            div_stands.webkitExitFullscreen();
+          }
+        });
+
+        $("#btn-right").click(function(){
+          if (array_actual+1 < array_stands_l){
+            array_anterior = array_actual;
+            array_actual = array_actual + 1;
+            standOut= $("#s-"+array_stands[array_anterior]);
+            titleStandOut= $("#ts-"+array_stands[array_anterior]);
+            removeAnimates($("#ts-"+array_stands[array_anterior]));
+            $("#ts-"+array_stands[array_anterior]).addClass("animate__slideOutLeft");
+            removeAnimates($("#s-"+array_stands[array_anterior]));
+            $("#s-"+array_stands[array_anterior]).addClass("animate__slideOutLeft");
+            removeAnimates($("#ts-"+array_stands[array_actual]));
+            $("#ts-"+array_stands[array_actual]).addClass("animate__slideInRight");
+            removeAnimates($("#s-"+array_stands[array_actual]));
+            $("#s-"+array_stands[array_actual]).addClass("animate__slideInRight");
+            displayIn($("#s-"+array_stands[array_actual]),$("#ts-"+array_stands[array_actual]));
+          }
+        });
+
+        $("#btn-left").click(function(){
+          if (array_actual-1 >=0){
+            array_anterior = array_actual;
+            array_actual = array_actual - 1;
+            standOut= $("#s-"+array_stands[array_anterior]);
+            titleStandOut= $("#ts-"+array_stands[array_anterior]);
+            removeAnimates($("#ts-"+array_stands[array_anterior]));
+            $("#ts-"+array_stands[array_anterior]).addClass("animate__slideOutRight");
+            removeAnimates($("#s-"+array_stands[array_anterior]));
+            $("#s-"+array_stands[array_anterior]).addClass("animate__slideOutRight");
+            removeAnimates($("#ts-"+array_stands[array_actual]));
+            $("#ts-"+array_stands[array_actual]).addClass("animate__slideInLeft");
+            removeAnimates($("#s-"+array_stands[array_actual]));
+            $("#s-"+array_stands[array_actual]).addClass("animate__slideInLeft");
+            displayIn($("#s-"+array_stands[array_actual]),$("#ts-"+array_stands[array_actual]));
+          }
+        });
+
+        function cambiarAnuncio(){
+          var a1 = "Desfile <br> 15:30 Hrs";
+          var a2 = "Belcanto <br> 16:00 Hrs";
+          var a3 = "Tomas Cox <br> 17:00 Hrs";
+          var a4 = "Valeria Morillo <br> 19:00 Hrs";
+          var a5 = "Programa <br> 18 Abril";
+
+          $("#anuncio").slideToggle();
+            setTimeout(function(){
+              if (a_actual=="a5"){
+              $("#anuncio").html(a1);
+              a_actual="a1";
+            }else if (a_actual=="a1"){
+              $("#anuncio").html(a2);
+              a_actual="a2";
+            }else if (a_actual=="a2"){
+              $("#anuncio").html(a3);
+              a_actual="a3";
+            }else if (a_actual=="a3"){
+              $("#anuncio").html(a4);
+              a_actual="a4";
+            }else if (a_actual=="a4"){
+              $("#anuncio").html(a5);
+              a_actual="a5";
+            }
+            $("#anuncio").slideToggle();
+          },1000);
+          
+          
+        }
+        setInterval(cambiarAnuncio,3500);
+
+      });
+
+      function stand_click(stand){
+        var stand_index = array_stands.findIndex((element) => element == stand);
+        $('#modal-stands').modal('toggle');
+        if (array_actual == stand_index){
+          removeAnimates($("#ts-"+array_stands[array_actual]));
+          $("#ts-"+array_stands[array_actual]).addClass("animate__swing");
+          removeAnimates($("#s-"+array_stands[array_actual]));
+          $("#s-"+array_stands[array_actual]).addClass("animate__swing");
+        }else{
+          array_anterior = array_actual;
+          array_actual = stand_index;
+          standOut= $("#s-"+array_stands[array_anterior]);
+          titleStandOut= $("#ts-"+array_stands[array_anterior]);
+          removeAnimates($("#ts-"+array_stands[array_anterior]));
+          $("#ts-"+array_stands[array_anterior]).addClass("animate__zoomOutDown");
+          removeAnimates($("#s-"+array_stands[array_anterior]));
+          $("#s-"+array_stands[array_anterior]).addClass("animate__zoomOutDown");
+          removeAnimates($("#ts-"+array_stands[array_actual]));
+          $("#ts-"+array_stands[array_actual]).addClass("animate__zoomInDown");
+          removeAnimates($("#s-"+array_stands[array_actual]));
+          $("#s-"+array_stands[array_actual]).addClass("animate__zoomInDown");
+          displayIn($("#s-"+array_stands[array_actual]),$("#ts-"+array_stands[array_actual]));
+        }
+
+        
+      }
+
+      function cotizar(id_stand){
+          $.post("/cotizar",
+          {id_s: id_stand, id_user: <%=data.id%>}, function(data){
+            if (data){
+              if(data=="EXISTE"){
+                $("#cotiza-info").modal("toggle");
+              }else{
+                $("#cotiza-success").modal("toggle");
+              }
+
+              console.log("SUCESS"+data);
+            }else{
+              console.log("ERROR");
+            }
+          });
+        }
+
+    </script>
+  </body>
+</html>
