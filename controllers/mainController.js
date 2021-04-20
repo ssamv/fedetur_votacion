@@ -85,7 +85,7 @@ controller.votacion = (req, res) => {
             candidatos_f.push(id_candidato);
           }
           console.log(candidatos_f);
-          conn.query('SELECT * FROM candidato WHERE id IN (?)', [candidatos_f], (err, rows_c) => {
+          conn.query('SELECT * FROM candidato WHERE id IN (?) ORDER BY apellido ASC, nombre ASC', [candidatos_f], (err, rows_c) => {
             if (err) {
               console.log(err);
               res.redirect('/');
