@@ -76,7 +76,7 @@
                 <h5 class="modal-title" id="staticBackdropLabel">Votación Exitosa</h5>
             </div>
             <div class="modal-body text-center">
-                <div class="alert alert-primary" role="alert">
+                <div class="alert alert-success" role="alert">
                     Su votación se registró correctamente.
                   </div>
                 <a href="/votaciones" class="btn btn-primary pt-2 pb-2" style="width:100%;font-size: 18px;">Volver a votaciones</a>
@@ -126,7 +126,7 @@
         <div class="text-center mt-2 mb-2 text-light" style="display: inline-block; width:100%;">
             <a class="float-start btn btn-outline-light" href="/votaciones">Volver</a>
             <a class="float-end btn btn-outline-light" href="#" data-bs-toggle="modal">Tutorial</a>
-                Votante: Sebastian Muñoz
+                Votante: <%=user.nombre%>
         </div>
       </div>
     </nav>
@@ -170,7 +170,7 @@
                 <div class="card">
                   <div class="card-body">
                     <div class="text-center">
-                        <img src="/img/candidatos/sebastian_munoz.png" width="70%"/>
+                        <img src="/img/candidatos/<%=candidatos[i].imagen%>" width="70%"/>
                     </div> 
                     <hr class="featurette-divider">
                     <div class="text-center">
@@ -233,11 +233,10 @@
 
                 if (voto>0){
                     arrayVotos.push([candidato,voto]);
-                    recuento_votacion+="<br>"+n_candidato+": "+voto+" voto(s)";
+                    recuento_votacion+=n_candidato+": "+voto+" voto(s)<br>";
                 }
             });
             
-            recuento_votacion+="<br>";
             if(resultado>votosTotales){
                 $("#recuento_votacion").html('VOTO "NULO"<br>Esta otorgando mas votos de los que tiene asignados, verifique sus votos o confirme su votación como "NULA"');
                 votos_insert = "NULO";
@@ -245,6 +244,11 @@
                 $("#recuento_votacion").html('VOTO "EN BLANCO"<br>No voto por ninguno de los candidatos, verifique sus votos o confirme su votacion como "EN BLANCO"');
                 votos_insert = "BLANCO";
             }else{
+                if(resultado<votosTotales){
+                  var v_blancos = votosTotales-resultado;
+                  recuento_votacion+='"EN BLANCO": '+v_blancos+' voto(s)<br>';
+                  arrayVotos.push(["BLANCO",v_blancos]);
+                }
                 $("#recuento_votacion").html(recuento_votacion);
                 for(i = 0; i < arrayVotos.length;i++){
                     insert += arrayVotos[i][0]+","+arrayVotos[i][1]+";";
@@ -259,7 +263,7 @@
             votosRestantes = votosTotales - resultado;
             if(votosRestantes<0){
                 $("#alert-1").css("display","block");
-                votosRestantes = 0
+                votosRestantes = 0;
                 $("#votos_restantes").html(votosRestantes);
             }else{
                 $("#alert-1").css("display","none");
@@ -267,6 +271,7 @@
             }
             console.log(votosRestantes)
         });
+
       });
 
       function save_votacion(){
