@@ -139,6 +139,77 @@ controller.comprobante = (req, res) => {
   res.send("EXITO");
 };
 
+controller.votaciones_r = (req, res) => {
+    req.getConnection((err, conn) => {
+          conn.query('SELECT * FROM votacion WHERE estado=1', (err, rows_v) => {
+            console.log(rows_v);
+            if (err) {
+              console.log(err);
+              res.redirect('/');
+            }else{
+              res.render('dashboard',{
+                votaciones: rows_v
+              });
+            }
+          });
+    });
+};
+
+controller.votaciones_rr = (req, res) => {
+  var votacion_get = req.params.id;
+  var candidatos_f = [];
+  console.log(votacion_get);
+  req.getConnection((err, conn) => {
+        conn.query('SELECT * FROM votacion WHERE id=?', [votacion_get], (err, rows_v) => {
+          console.log(rows_v);
+          if (err) {
+            console.log(err);
+            res.redirect('/');
+          }else{
+            conn.query('SELECT * FROM voto WHERE id_votacion=?',[votacion_get],(err, rows_vv) => {
+              console.log(rows_vv);
+              if (err) {
+                console.log(err);
+                res.redirect('/');
+              }else{
+                var candidatos_v = rows_v[0].candidatos.split(",");
+                for(i = 0; i < candidatos_v.length; i++){
+                  var id_candidato = parseInt(candidatos_v[i]);
+                  candidatos_f.push(id_candidato);
+                }
+                console.log(candidatos_f);
+                conn.query('SELECT * FROM candidato WHERE id IN (?) ORDER BY apellido ASC, nombre ASC', [candidatos_f], (err, rows_c) => {
+                  if (err) {
+                    console.log(err);
+                    res.redirect('/');
+                  }else{
+                    conn.query('SELECT COUNT(*) as cant FROM `votacion` as v JOIN `voto` as vv ON v.id = vv.id_votacion WHERE v.estado=1 AND v.id = ?', [parseInt(votacion_get)], (err, rows_cant_v) => {
+                      if (err) {
+                        console.log(err);
+                        res.redirect('/');
+                      }else{
+                        conn.query('SELECT count(*) as cant FROM `votante` WHERE votaciones LIKE ?', ["%"+votacion_get+"%"], (err, rows_cant_t) => {
+                          if (err) {
+                            console.log(err);
+                            res.redirect('/');
+                          }else{
+                            console.log(rows_cant_t);
+                            console.log(rows_cant_v);
+                            res.render('votaciones-results',{
+                              votacion: rows_v[0], votos: rows_vv, candidatos: rows_c, totales: rows_cant_t[0],votaron: rows_cant_v[0] 
+                            });
+                          }
+                        });
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+  });
+};
 
 /*
 controller.save = (req, res) => {

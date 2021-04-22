@@ -7,6 +7,8 @@ router.get('/votacion/:id', mainController.votacion);
 router.post('/votar', mainController.save_votacion);
 router.get('/votaciones', mainController.votaciones);
 router.post('/comprobante', mainController.comprobante);
+router.get('/dashboard',mainController.votaciones_r);
+router.get('/votacion-resultados/:id',mainController.votaciones_rr);
 
 router.get('/', function(req, res) {
     res.render('home',{

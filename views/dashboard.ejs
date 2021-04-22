@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <!-- Basic Conf/Desc -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">	
+    <title>Votaciones</title>	
+    <meta name="keywords" content="Swaper"/>
+    <meta name="description" content="Swaper">
+    <meta name="author" content="Sebastian Muñoz">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="#" />
+    <link rel="apple-touch-icon" href="#">
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
+
+    <!-- CSS-->
+    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/custom.css">
+
+    <!-- JS -->
+    <script src="/lib/jquery/jquery-3.6.0.min.js"></script>
+    <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.1.1/chart.min.js" integrity="sha512-BqNYFBAzGfZDnIWSAEGZSD/QFKeVxms2dIBPfw11gZubWwKUjEgmFUtUls8vZ6xTRZN/jaXGHD/ZaxD9+fDo0A==" crossorigin="anonymous"></script>
+
+  </head>
+
+  <body style="padding-top: 3.5rem;">
+
+    <!-- Modal -->
+    <div class="modal fade" id="tutorial"  data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Tutorial</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body text-center">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top p-0" style="background-color: #4e4e4e;">
+      <div class="container-fluid text-start">
+        <a class="navbar-brand p-0" href="/" style="float: left; margin-right: 2% !important;"><img src="/img/POWERED_BY_SWAPER_BLANCO.png" width="150px"/></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse pt-2 pb-2" id="navbarCollapse">
+          <div id="#nav-collapse-menu-items" class="text-end" style="display: inline-block; width:100%;">
+            <a class="btn btn-outline-light" href="/dashboard">Dashboard</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    
+    <header style="position:relative; top:45px;">
+      <div class="container pt-5 pb-2">
+        <div class="row featurette mb-3">
+          <div class="col-md-12 text-start">
+            <h1 class="featurette-heading fw-bold" style="color: #4e4e4e;">Votaciones<span class="text-success fw-bold"></span></h1>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main style="position:relative; min-height: 50vh;" id="#feriavirtual">
+        <div class="album py-5">
+          <div class="container">
+            <div class="row row-cols-1 row-cols-ms-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-3 g-3">
+              
+          <% if(votaciones!=undefined){%>
+            <% for(i =0; i < votaciones.length; i++){%>
+              <div class="col">
+                <div class="card">
+                  <div class="card-body">
+                    <div> <h3><%= votaciones[i].nombre %></h3></div>
+                  </div>
+                  <a href="/votacion-resultados/<%=votaciones[i].id%>" class="btn btn-outline-success btn-block fw-bold" style="font-size: 17px;">Resultados</a>
+                </div>
+              </div>
+            <% }  }%>
+            </div>
+          </div>
+        </div>
+    </main>
+
+
+    <footer style="position:relative; top:45px; background-color: #4e4e4e; min-height: 30vh;"  class="footer py-3">
+        <div class="container">
+          <span class="text-light" style="font-size: 18px; font-weight: bold;">Plataforma para votaciones de Swaper</span>
+          <br>
+          <div style="width:100%" class="text-center">
+            <a href="https://www.e-swaper.com/" target="_blank">
+            <img src="/img/POWERED_BY_SWAPER_BLANCO.png" style="width: 200px;"/>
+            </a>
+          </div>
+        </div>
+    </footer>
+
+    <script>
+        
+    </script>
+  </body>
+</html>

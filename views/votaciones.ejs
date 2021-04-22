@@ -55,21 +55,20 @@
     </div>
 
 
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top p-0" style="background-color: #4e4e4e;">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top p-0" style="background-color: #f0f0f0;">
       <div class="container-fluid text-start">
-        <a class="navbar-brand p-0" href="/" style="float: left; margin-right: 2% !important;"><img src="/img/POWERED_BY_SWAPER_BLANCO.png" width="150px"/></a>
+        <a class="navbar-brand p-0" style="float: left; margin-right: 2% !important;"><img src="/img/LOGO_FEDETUR.png" width="150px"/></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse pt-2 pb-2" id="navbarCollapse">
           <div id="#nav-collapse-menu-items" class="text-end" style="display: inline-block; width:100%;">
-            <ul class="navbar-nav me-4 mb-3 fw-bold text-light" >
+            <ul class="navbar-nav me-4 mb-3 fw-bold text-secondary" >
               <li class="nav-item">
                 Votante: <%=user.nombre%>
               </li>
             </ul>
-              <a class="btn btn-outline-light" href="#" data-bs-toggle="modal">Tutorial</a>
-              <a class="btn btn-outline-light" href="/logout">Salir</a>
+              <a class="btn btn-outline-secondary" href="/logout">Salir</a>
           </div>
         </div>
       </div>
@@ -95,7 +94,7 @@
               <div class="col">
                 <div class="card">
                   <div class="card-body">
-                    <div> <h3><%= votaciones[i].nombre %><%= votaciones[i].id_votacion %></h3></div> 
+                    <div> <h3><%= votaciones[i].nombre %></h3></div> 
                     <hr class="featurette-divider">
                     <div><span>Estado: <strong class="text-success">Pendiente</strong></span></div> 
                   </div>
