@@ -6,6 +6,7 @@ router.post('/login', mainController.login);
 router.get('/votacion/:id', mainController.votacion);
 router.post('/votar', mainController.save_votacion);
 router.get('/votaciones', mainController.votaciones);
+router.post('/comprobante', mainController.comprobante);
 
 router.get('/', function(req, res) {
     res.render('home',{

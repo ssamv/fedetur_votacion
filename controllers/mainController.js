@@ -1,3 +1,5 @@
+const modulepdfgenerator = require('../functions/pdf_generator');
+
 const controller = {};
 
 controller.login = (req, res) => {
@@ -42,7 +44,7 @@ controller.votaciones = (req, res) => {
     }
     console.log(votaciones_f);
     req.getConnection((err, conn) => {
-      conn.query('SELECT * FROM votacion v LEFT JOIN voto vv ON v.id=vv.id_votacion WHERE v.id IN (?) AND vv.id_votante = (?); ', [votaciones_f,user_s.id], (err, rows_vv) => {
+      conn.query('SELECT v.id as id_votacion, v.nombre as nombre FROM votacion v LEFT JOIN voto vv ON v.id=vv.id_votacion WHERE v.id IN (?) AND vv.id_votante = (?)', [votaciones_f,user_s.id], (err, rows_vv) => {
         console.log(rows_vv);
         if (err) {
           console.log(err);
@@ -126,6 +128,15 @@ controller.save_votacion = (req, res) => {
       }
     });
   })
+};
+
+controller.comprobante = (req, res) => {
+  var nombre_user=req.body.n_u;
+  var id_user=req.body.id_u;
+  var nombre_votacion=req.body.n_v;
+  var votacion=req.body.votacion;
+  modulepdfgenerator.comprobante(id_user,nombre_user,nombre_votacion,votacion);
+  res.send("EXITO");
 };
 
 

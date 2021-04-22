@@ -151,44 +151,58 @@
     </div>
     
     <header>
-      <div class="container pt-5 pb-2">
+      <div class="container pb-2">
         <div class="row featurette">
           <div class="col-md-12 text-start">
             <h1 class="featurette-heading fw-bold" style="color: #4e4e4e;"><%=votacion.nombre%><span class="text-success fw-bold"></span></h1>
-            <p>
-              <%=votacion.descripcion%>
-            </p>
           </div>
         </div>
       </div>
     </header>
 
     <main style="position:relative; min-height: 50vh;" id="#feriavirtual">
-        <div class="album py-5">
+        <div class="album ">
           <div class="container">
-            <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-6 g-3">
+            <div class="row row-cols-2 row-cols-sm-4 row-cols-md-4 row-cols-lg-4 row-cols-xl-4 g-3">
 
                 <% for(i = 0; i < candidatos.length; i++){ %>
               <div class="col">
                 <div class="card">
                   <div class="card-body">
                     <div class="text-center">
-                        <img src="/img/candidatos/<%=candidatos[i].imagen%>" width="70%"/>
+                        <img src="/img/candidatos/<%=candidatos[i].imagen%>" width="40%"/>
                     </div> 
-                    <hr class="featurette-divider">
                     <div class="text-center">
                         <span style="font-size: 17px;"><%=candidatos[i].nombre%> <%=candidatos[i].apellido%></span><br>
                         <span style="font-size: 17px; font-weight: bold;"><%=candidatos[i].empresa%></span>
                     </div> 
                     <div class="text-center mt-2">
                         <div class="d-inline-block" style="width: 50%;">
-                            <input type="number" class="form-control voto_input" data-id="<%=candidatos[i].id%>" data-nombre="<%=candidatos[i].nombre%>" min="0" max="<%=user.votos%>" value="0"/>
+                            <input type="number" class="form-control voto_input" data-id="<%=candidatos[i].id%>" data-nombre="<%=candidatos[i].nombre+" "+candidatos[i].apellido%>" min="0" max="<%=user.votos%>" value="0"/>
                         </div>
                     </div>
                   </div>
                 </div>
               </div>
             <% } %>
+            <div class="col">
+              <div class="card">
+                <div class="card-body">
+                  <div class="text-center">
+                      <img src="/img/candidatos/BLANCO.png" width="40%"/>
+                  </div>
+                  <div class="text-center">
+                      <span style="font-size: 17px;">VOTOS</span><br>
+                      <span style="font-size: 17px; font-weight: bold;">EN BLANCO</span>
+                  </div> 
+                  <div class="text-center mt-2">
+                      <div class="d-inline-block" style="width: 50%;">
+                          <input id="voto_blanco" type="number" class="form-control voto_input" data-id="BLANCO" data-nombre="BLANCO" min="0" max="<%=user.votos%>" value="0"/>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             
             </div>
           </div>
@@ -216,7 +230,7 @@
       var votosRestantes = 0;
 
       var arrayVotos = [];
-      var votos_insert = "BLANCO";
+      var votos_insert = "BLANCO,"+votosTotales;
       var recuento_votacion ="";
 
       $(document).ready(function(){
@@ -230,22 +244,24 @@
             $(".voto_input").each(function(){
                 voto = parseInt($(this).val());
                 candidato = $(this).data("id");
-                n_candidato = $(this).data("nombre");
-                console.log(candidato+n_candidato);
-                resultado += voto;
+                if(candidato!="BLANCO"){
+                  n_candidato = $(this).data("nombre");
+                  console.log(candidato+n_candidato);
+                  resultado += voto;
 
-                if (voto>0){
-                    arrayVotos.push([candidato,voto]);
-                    recuento_votacion+=n_candidato+": "+voto+" voto(s)<br>";
+                  if (voto>0){
+                      arrayVotos.push([candidato,voto]);
+                      recuento_votacion+=n_candidato+": "+voto+" voto(s)<br>";
+                  }
                 }
             });
-            
+
             if(resultado>votosTotales){
                 $("#recuento_votacion").html('VOTO "NULO"<br>Esta otorgando mas votos de los que tiene asignados, verifique sus votos o confirme su votación como "NULA"');
-                votos_insert = "NULO";
+                votos_insert = "NULO,"+votosTotales;
             }else if(resultado<=0){
                 $("#recuento_votacion").html('VOTO "EN BLANCO"<br>No voto por ninguno de los candidatos, verifique sus votos o confirme su votacion como "EN BLANCO"');
-                votos_insert = "BLANCO";
+                votos_insert = "BLANCO,"+votosTotales;
             }else{
                 if(resultado<votosTotales){
                   var v_blancos = votosTotales-resultado;
@@ -258,6 +274,9 @@
                 }
                 votos_insert = insert.substring(0,insert.length-1);
             }
+
+            var candidato_blanco = parseInt($("#voto_blanco").val());
+            resultado = resultado+candidato_blanco;
             return resultado;
           }
 

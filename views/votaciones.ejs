@@ -112,7 +112,7 @@
                       <hr class="featurette-divider">
                       <div><span>Estado: <strong class="text-secondary">Completada</strong></span></div> 
                     </div>
-                    <a href="#" class="btn btn-outline-secondary btn-block fw-bold" style="font-size: 17px;">Descargar Comprobante</a>
+                    <a onclick="descargar_comprobante(<%= votaciones_v[i].id_votacion %>,'<%= votaciones_v[i].nombre %>');" class="btn btn-outline-secondary btn-block fw-bold" style="font-size: 17px;">Descargar Comprobante</a>
                   </div>
                 </div>
               <%  } }%>
@@ -135,11 +135,33 @@
     </footer>
 
     <script>
-            
 
-      $(document).ready(function(){
+      function file_exists(url)
+      {
+          var http = new XMLHttpRequest();
+          http.open('HEAD', url, false);
+          http.send();
+          return http.status!=404;
+      }
       
-      });
+      function descargar_comprobante(votacion_in, n_votacion_in){
+        if(file_exists("/pdf/comprobantes_votos/comprobante_<%=user.id%>_"+votacion_in+".pdf")){
+          setTimeout(() => {
+            window.open("/pdf/comprobantes_votos/comprobante_<%=user.id%>_"+votacion_in+".pdf", '_blank');
+          }, 1500);
+        }else{
+          $.post("/comprobante",{id_u: <%=user.id%>, n_u: "<%=user.nombre%>", n_v: n_votacion_in, votacion: votacion_in}, function(data){
+            if (data){
+              setTimeout(() => {
+                window.open("/pdf/comprobantes_votos/comprobante_<%=user.id%>_"+votacion_in+".pdf", '_blank');
+              }, 1500);
+            }else{
+                console.log("ERROR");
+            }
+          });
+        }
+      }
+
         
     </script>
   </body>
