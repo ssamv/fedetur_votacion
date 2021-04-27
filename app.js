@@ -24,7 +24,7 @@ app.use(myConnection(mysql, {
   password: 'Swaper2021$$',
   database: 'n796545_votacion',
   port: 3306
-}, 'single'));
+}, 'request'));
 app.use(express.urlencoded({extended: true}));
 
 //session
