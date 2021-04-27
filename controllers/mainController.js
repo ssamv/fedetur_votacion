@@ -211,6 +211,147 @@ controller.votaciones_rr = (req, res) => {
   });
 };
 
+controller.exportvotacion = (req, res) => {
+
+  var votacion_get = req.params.id;
+  var candidatos_f = [];
+  var votacion_r =[];
+  var votos_r=[];
+  var candidatos_r=[];
+  var usuarios_r=[];
+  console.log(votacion_get);
+  req.getConnection((err, conn) => {
+        conn.query('SELECT * FROM votacion WHERE id=?', [votacion_get], (err, rows_v) => {
+          if (err) {
+            console.log(err);
+            res.redirect('/');
+          }else{
+            votacion_r =  rows_v[0]; 
+            conn.query('SELECT * FROM voto WHERE id_votacion=?',[votacion_get],(err, rows_vv) => {
+              if (err) {
+                console.log(err);
+                res.redirect('/');
+              }else{
+                votos_r= rows_vv; 
+                var candidatos_v = rows_v[0].candidatos.split(",");
+                for(i = 0; i < candidatos_v.length; i++){
+                  var id_candidato = parseInt(candidatos_v[i]);
+                  candidatos_f.push(id_candidato);
+                }
+                conn.query('SELECT * FROM candidato WHERE id IN (?) ORDER BY apellido ASC, nombre ASC', [candidatos_f], (err, rows_c) => {
+                  if (err) {
+                    console.log(err);
+                    res.redirect('/');
+                  }else{
+                    conn.query('SELECT * FROM votante', [candidatos_f], (err, rows_user) => {
+                      candidatos_r= rows_c;
+                      usuarios_r=rows_user;
+                      console.log(votos_r);
+  console.log(candidatos_r);
+  var resultados_re = [];
+  var resultados_finales_re = [];
+  var totalescandidato_re = 0;
+  
+
+const excel = require('node-excel-export');
+
+const specification = {
+  votante: { // <- the key should match the actual data key
+    displayName: 'Votante',
+    width: 200 // <- width in pixels
+  },
+  votos: {
+    displayName: 'Votos',
+    width: 50// <- width in chars (when the number is passed as string)
+  },
+  candidato: {
+    displayName: 'Candidato',
+    width: 200 // <- width in pixels
+  }
+}
+
+const dataset = [];
+
+for(i = 0; i < votos_r.length;i++){
+  var resultados_in = votos_r[i].votos.split(";");
+  for(j = 0; j < resultados_in.length;j++){
+    resultados_re.push([resultados_in[j],votos_r[i].id_votante]);
+  }
+}
+for(i = 0; i < candidatos_r.length;i++){
+totalescandidato_re = 0;
+  for (j = 0; j < resultados_re.length;j++){
+      var resultado_detalle = resultados_re[j][0].split(",");
+      if(resultado_detalle[0]==candidatos_r[i].id){
+        for(l = 0; l < usuarios_r.length;l++){
+          if (usuarios_r[l].id==resultados_re[j][1]){
+            dataset.push({votante: usuarios_r[l].nombre,votos: parseInt(resultado_detalle[1]), candidato: candidatos_r[i].nombre+" "+candidatos_r[i].apellido});
+          }
+        }
+       
+        totalescandidato_re = totalescandidato_re+parseInt(resultado_detalle[1]);
+      }
+  }
+  resultados_finales_re.push([candidatos_r[i].nombre+" "+candidatos_r[i].apellido,totalescandidato_re]);
+}
+
+
+
+totalescandidato_re = 0;
+for (j = 0; j < resultados_re.length;j++){
+  var resultado_detalle = resultados_re[j][0].split(",");
+  if(resultado_detalle[0]=="BLANCO"){
+    for(l = 0; l < usuarios_r.length;l++){
+      if (usuarios_r[l].id==resultados_re[j][1]){
+        dataset.push({votante: usuarios_r[l].nombre,votos: parseInt(resultado_detalle[1]), candidato:  "BLANCO"});
+      }
+    }
+    totalescandidato_re = totalescandidato_re+parseInt(resultado_detalle[1]);
+  }
+}
+resultados_finales_re.push(["BLANCO",totalescandidato_re]);
+
+totalescandidato_re = 0;
+for (j = 0; j < resultados_re.length;j++){
+  var resultado_detalle = resultados_re[j][0].split(",");
+  if(resultado_detalle[0]=="NULO"){
+    for(l = 0; l < usuarios_r.length;l++){
+      if (usuarios_r[l].id==resultados_re[j][1]){
+        dataset.push({votante: usuarios_r[l].nombre,votos: parseInt(resultado_detalle[1]), candidato: "NULO"});
+      }
+    }
+    totalescandidato_re = totalescandidato_re+parseInt(resultado_detalle[1]);
+  }
+}
+resultados_finales_re.push(["NULO",totalescandidato_re]);
+
+ 
+// Create the excel report.
+// This function will return Buffer
+const report = excel.buildExport(
+  [ // <- Notice that this is an array. Pass multiple sheets to create multi sheet report
+    {
+      name: 'Report', // <- Specify sheet name (optional)
+      specification: specification,
+      data: dataset // <-- Report data
+    }
+  ]
+);
+ 
+// You can then return this straight
+res.attachment('report.xlsx'); // This is sails.js specific (in general you need to set headers)
+return res.send(report);
+                    
+                    });
+                    
+                  }
+                });
+              }
+            });
+          }
+        });
+  });
+}
 /*
 controller.save = (req, res) => {
   const data = req.body;

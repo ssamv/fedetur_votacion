@@ -9,6 +9,7 @@ router.get('/votaciones', mainController.votaciones);
 router.post('/comprobante', mainController.comprobante);
 router.get('/dashboard',mainController.votaciones_r);
 router.get('/votacion-resultados/:id',mainController.votaciones_rr);
+router.get('/excel/:id',mainController.exportvotacion);
 
 router.get('/', function(req, res) {
     res.render('home',{
